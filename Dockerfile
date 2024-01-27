@@ -40,7 +40,6 @@ COPY . /app
 RUN deno task build 
 RUN deno task bundle 
 RUN cp ./dist/silverbullet.js /silverbullet.js
-WORKDIR /
 
 # Expose port 3000
 # Port map this when running, e.g. with -p 3002:3000 (where 3002 is the host port)
@@ -53,7 +52,9 @@ ENV SB_FOLDER /space
 # Copy the bundled version of silverbullet into the container
 # ADD ./dist/silverbullet.js /silverbullet.js
 # As well as the docker-entrypoint.sh script
-# ADD ./docker-entrypoint.sh /docker-entrypoint.sh
+ADD ./docker-entrypoint.sh /docker-entrypoint.sh
+
+WORKDIR /
 
 # Run the server, allowing to pass in additional argument at run time, e.g.
 #   docker run -p 3002:3000 -v myspace:/space -it zefhemel/silverbullet --user me:letmein
